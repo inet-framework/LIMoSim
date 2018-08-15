@@ -16,7 +16,7 @@
 #ifndef __INET_EVENTSCHEDULER_H_
 #define __INET_EVENTSCHEDULER_H_
 
-#include <omnetpp.h>
+#include "inet/common/INETDefs.h"
 
 #include "inet/common/geometry/common/GeographicCoordinateSystem.h"
 
@@ -24,7 +24,7 @@
 #include "LIMoSim/sim/event.h"
 #include "LIMoSim/sim/eventscheduler.h"
 
-using namespace omnetpp;
+#include "LIMoEvent_m.h"
 
 namespace inet
 {
@@ -49,7 +49,7 @@ protected:
     virtual void handleMessage(cMessage *_message) override;
 
 private:
-    std::map<LIMoSim::Event*, cMessage*> m_events;
+    std::map<LIMoSim::Event*, LIMoEvent*> m_events;
     IGeographicCoordinateSystem *m_geographicCoordinateSystemModule = nullptr;
 
 };

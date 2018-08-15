@@ -52,8 +52,8 @@ void LIMoSimController::scheduleEvent(LIMoSim::Event *_event)
 {
     Enter_Method("scheduleEvent");
 
-    cMessage *event = new cMessage(_event->getInfo().c_str());
-    event->setContextPointer(_event);
+    LIMoEvent *event = new LIMoEvent(_event->getInfo().c_str());
+    event->setEvent(_event);
     m_events[_event] = event;
 
     scheduleAt(_event->getTimestamp(), event);
@@ -80,7 +80,8 @@ void LIMoSimController::handleMessage(cMessage *_message)
 {
     if(_message->isSelfMessage())
     {
-        LIMoSim::Event *event = (LIMoSim::Event *)_message->getContextPointer();
+        auto _event = check_and_cast<LIMoEvent*>(_message);
+        LIMoSim::Event *event = _event->getEventForUpdate();
         if (event) {
             auto it = m_events.find(event);
             if(it != m_events.end() && it->second == _message)
