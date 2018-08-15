@@ -24,6 +24,6 @@ namespace inet;
 
 class LIMoEvent extends cMessage
 {
-    LIMoSim::Event *event;
+    LIMoSim::Event *event[];
 }
 

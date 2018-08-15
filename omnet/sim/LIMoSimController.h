@@ -49,7 +49,7 @@ protected:
     virtual void handleMessage(cMessage *_message) override;
 
 private:
-    std::map<LIMoSim::Event*, LIMoEvent*> m_events;
+    std::map<simtime_t, LIMoEvent*> m_events;
     IGeographicCoordinateSystem *m_geographicCoordinateSystemModule = nullptr;
 
 };
