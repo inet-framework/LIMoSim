@@ -34,10 +34,9 @@ LIMoSimController::LIMoSimController()
 
 LIMoSimController::~LIMoSimController()
 {
-    std::map<cMessage*, LIMoSim::Event*>::iterator it;
-    for(it=m_events.begin(); it!=m_events.end(); it++)
+    for(auto it=m_events.begin(); it!=m_events.end(); it++)
     {
-        deleteEvent(it->second);
+        deleteEvent(it->first);
     }
 }
 
@@ -56,23 +55,23 @@ void LIMoSimController::scheduleEvent(LIMoSim::Event *_event)
 {
     Enter_Method("scheduleEvent");
 
-    cMessage *event = new cMessage();
-    m_events[event] = _event;
+    cMessage *event = new cMessage(_event->getInfo().c_str());
+    event->setContextPointer(_event);
+    m_events[_event] = event;
 
     scheduleAt(_event->getTimestamp(), event);
 }
 
 void LIMoSimController::cancelEvent(LIMoSim::Event *_event)
 {
-    cMessage *message = getMessageForEvent(_event);
-    if(message)
+    auto it = m_events.find(_event);
+    if(it != m_events.end())
     {
-        cancelAndDelete(message);
+        cancelAndDelete(it->second);
 
-        m_events.erase(message);
+        m_events.erase(it);
         delete _event;
     }
-
 }
 
 void LIMoSimController::deleteEvent(LIMoSim::Event *_event)
@@ -80,33 +79,24 @@ void LIMoSimController::deleteEvent(LIMoSim::Event *_event)
     cancelEvent(_event);
 }
 
-cMessage* LIMoSimController::getMessageForEvent(LIMoSim::Event *_event)
-{
-    cMessage *message = 0;
-    std::map<cMessage*, LIMoSim::Event*>::iterator it;
-    for(it=m_events.begin(); it!=m_events.end(); it++)
-    {
-        if(it->second==_event)
-            message = it->first;
-    }
-
-    return message;
-}
-
 void LIMoSimController::handleMessage(cMessage *_message)
 {
     if(_message->isSelfMessage())
     {
-        if(m_events.count(_message))
-        {
-            LIMoSim::Event *event = m_events[_message];
-            event->handle();
+        LIMoSim::Event *event = (LIMoSim::Event *)_message->getContextPointer();
+        if (event) {
+            auto it = m_events.find(event);
+            if(it != m_events.end() && it->second == _message)
+            {
+                m_events.erase(it);
+                event->handle();
 
-
-            //
-            m_events.erase(_message);
-            delete _message;
+                //
+            }
+            else
+                throw cRuntimeError("Module error: event not in the map: %s", event->getInfo().c_str());
         }
+        delete _message;
     }
 }
 

@@ -41,8 +41,6 @@ public:
     void cancelEvent(LIMoSim::Event *_event) override;
     void deleteEvent(LIMoSim::Event *_event) override;
 
-    cMessage* getMessageForEvent(LIMoSim::Event *_event);
-
     // IGeoCoordConverter:
     virtual void setOrigin(const LIMoSim::Position &_origin) override;
     virtual LIMoSim::Vector3d getOffset(const LIMoSim::Position &_node) const override;
@@ -51,7 +49,7 @@ protected:
     virtual void handleMessage(cMessage *_message) override;
 
 private:
-    std::map<cMessage*, LIMoSim::Event*> m_events;
+    std::map<LIMoSim::Event*, cMessage*> m_events;
     IGeographicCoordinateSystem *m_geographicCoordinateSystemModule = nullptr;
 
 };
