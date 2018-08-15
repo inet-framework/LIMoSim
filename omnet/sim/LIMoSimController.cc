@@ -46,9 +46,6 @@ void LIMoSimController::initialize()
     m_geographicCoordinateSystemModule = getModuleFromPar<IGeographicCoordinateSystem>(par("geographicCoordinateSystemModule"), this);
     LIMoSim::Simulation *sim = LIMoSim::Simulation::getInstance(this);
     sim->load(mapFile, "", *this);
-
-    cMessage *timer = new cMessage();
-    scheduleAt(simTime(), timer);
 }
 
 void LIMoSimController::scheduleEvent(LIMoSim::Event *_event)
