@@ -21,7 +21,7 @@
 
 using namespace omnetpp;
 
-namespace inet {
+namespace LIMoSimInet {
 
 
 class Trip : public StrategicModel

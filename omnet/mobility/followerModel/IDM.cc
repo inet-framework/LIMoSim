@@ -16,7 +16,7 @@
 #include "IDM.h"
 #include "LIMoSim/mobility/followerModel/idm.h"
 
-namespace inet {
+namespace LIMoSimInet {
 
 Define_Module(IDM);
 

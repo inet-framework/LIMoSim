@@ -20,7 +20,7 @@ class EventList {
     @descriptor(readonly);
 }
 
-namespace inet;
+namespace LIMoSimInet;
 
 class LIMoEvent extends cMessage
 {

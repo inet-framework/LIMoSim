@@ -27,7 +27,7 @@
 
 #include "LIMoSim/mobility/laneChange/mobil.h"
 
-namespace inet {
+namespace LIMoSimInet {
 
 Define_Module(LIMoSimCar);
 
@@ -140,7 +140,7 @@ void LIMoSimCar::updatePosition()
     if(p_car)
     {
         LIMoSim::Position position = p_car->getPosition();
-        Coord coord(position.x, position.y, position.z);
+        inet::Coord coord(position.x, position.y, position.z);
         lastPosition = coord;
     }
 }
@@ -150,9 +150,9 @@ void LIMoSimCar::updateOrientation()
     if(p_car)
     {
         LIMoSim::Orientation orientation = p_car->getOrientation();
-        lastOrientation.alpha = deg(orientation.getYaw());
-        lastOrientation.beta = deg(orientation.getPitch());
-        lastOrientation.gamma = deg(orientation.getRoll());
+        lastOrientation.alpha = inet::deg(orientation.getYaw());
+        lastOrientation.beta = inet::deg(orientation.getPitch());
+        lastOrientation.gamma = inet::deg(orientation.getRoll());
     }
 }
 

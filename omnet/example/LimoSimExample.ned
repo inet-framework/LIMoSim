@@ -16,9 +16,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 //
 
-package inet.LIMoSim.omnet.example;
+package LIMoSim.omnet.example;
 
-import inet.LIMoSim.omnet.sim.LIMoSimController;
+import LIMoSim.omnet.sim.LIMoSimController;
 import inet.common.geometry.common.OsgGeographicCoordinateSystem;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.AdhocHost;

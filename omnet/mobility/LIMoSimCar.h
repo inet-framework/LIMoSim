@@ -22,10 +22,10 @@
 
 #include "LIMoSim/vehicles/car.h"
 
-namespace inet {
+namespace LIMoSimInet {
 
 
-class INET_API LIMoSimCar : public MovingMobilityBase
+class INET_API LIMoSimCar : public inet::MovingMobilityBase
 {
 
 public:

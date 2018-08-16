@@ -24,8 +24,7 @@ using namespace omnetpp;
 
 namespace LIMoSim { class Car; }
 
-namespace inet {
-
+namespace LIMoSimInet {
 
 class FollowerModel : public cSimpleModule
 {

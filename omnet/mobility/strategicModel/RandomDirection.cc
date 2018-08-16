@@ -15,7 +15,7 @@
 
 #include "RandomDirection.h"
 
-namespace inet {
+namespace LIMoSimInet {
 
 Define_Module(RandomDirection);
 

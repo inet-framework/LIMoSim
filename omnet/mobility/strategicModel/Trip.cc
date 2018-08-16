@@ -17,7 +17,7 @@
 #include "LIMoSim/map/map.h"
 #include "LIMoSim/map/osm/parser.h"
 
-namespace inet {
+namespace LIMoSimInet {
 
 Define_Module(Trip);
 

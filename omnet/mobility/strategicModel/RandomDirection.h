@@ -22,7 +22,7 @@
 
 using namespace omnetpp;
 
-namespace inet {
+namespace LIMoSimInet {
 
 
 class RandomDirection : public StrategicModel

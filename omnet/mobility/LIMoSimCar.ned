@@ -14,29 +14,28 @@
 // 
 
 
-package inet.LIMoSim.omnet.mobility;
-import inet.LIMoSim.omnet.mobility.strategicModel.IStrategicModel;
-import inet.LIMoSim.omnet.mobility.followerModel.IFollowerModel;
+package LIMoSim.omnet.mobility;
+import LIMoSim.omnet.mobility.strategicModel.IStrategicModel;
+import LIMoSim.omnet.mobility.followerModel.IFollowerModel;
 
 import inet.mobility.base.MovingMobilityBase;
 
 module LIMoSimCar extends MovingMobilityBase
 {
-	parameters:
+    parameters:
         volatile double speed @unit(mps) = default(mps); // use uniform(minSpeed, maxSpeed) or another distribution       
-    	@class(LIMoSimCar);
-    	
-    	string strategicModelType = default("Trip");
-    	string followerModelType = default("IDM");
-    
-    	string configuration = default("");
-    	string way = default("-1");
-    	int segment = default(-1);
-    	int lane = default(-1);
-    	double offset @unit(m) = default(0m);
-    
+        @class(LIMoSimCar);
+
+        string strategicModelType = default("Trip");
+        string followerModelType = default("IDM");
+
+        string configuration = default("");
+        string way = default("-1");
+        int segment = default(-1);
+        int lane = default(-1);
+        double offset @unit(m) = default(0m);
+
     submodules:
-        strategicModel: <strategicModelType> like IStrategicModel if strategicModelType != "" {}
-        followerModel: <followerModelType> like IFollowerModel if followerModelType != "" {}
-        
- }
+        strategicModel: <strategicModelType> like IStrategicModel if strategicModelType != "";
+        followerModel: <followerModelType> like IFollowerModel if followerModelType != "";
+}

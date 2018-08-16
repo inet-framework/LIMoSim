@@ -26,8 +26,9 @@
 
 #include "LIMoEvent_m.h"
 
-namespace inet
+namespace LIMoSimInet
 {
+using namespace omnetpp;
 
 class LIMoSimController : public cSimpleModule, public LIMoSim::EventScheduler, public LIMoSim::IGeoCoordConverter
 {
@@ -50,7 +51,7 @@ protected:
 
 private:
     std::map<simtime_t, LIMoEvent*> m_events;
-    IGeographicCoordinateSystem *m_geographicCoordinateSystemModule = nullptr;
+    inet::IGeographicCoordinateSystem *m_geographicCoordinateSystemModule = nullptr;
 
 };
 

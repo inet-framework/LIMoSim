@@ -15,7 +15,7 @@
 
 #include "FollowerModel.h"
 
-namespace inet {
+namespace LIMoSimInet {
 
 Register_Abstract_Class(FollowerModel);
 

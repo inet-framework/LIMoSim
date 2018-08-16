@@ -15,10 +15,15 @@ using namespace omnetpp;
 
 namespace LIMoSim { class Car; }
 
+namespace LIMoSimInet {
+
 class StrategicModel : public cSimpleModule
 {
 public:
     virtual LIMoSim::MobilityModel* createStrategicModel(LIMoSim::Car *_car) = 0;
 };
 
+} // namespace
+
 #endif /* INET__STRATEGICMODEL_H_ */
+

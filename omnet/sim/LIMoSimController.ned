@@ -13,7 +13,7 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-package inet.LIMoSim.omnet.sim;
+package LIMoSim.omnet.sim;
 
 //
 // TODO auto-generated module

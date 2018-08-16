@@ -15,10 +15,9 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 
-package inet.LIMoSim.omnet.mobility.followerModel;
+package LIMoSim.omnet.mobility.followerModel;
 
 
 moduleinterface IFollowerModel 
 {
-
 }
