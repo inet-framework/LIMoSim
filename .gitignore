@@ -12,3 +12,6 @@ omnet/example/results/
 omnet/example/cache/
 .qtenv.ini
 .qtenvrc
+
+# ignore binary files
+out/
