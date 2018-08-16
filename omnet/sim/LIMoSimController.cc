@@ -34,13 +34,11 @@ LIMoSimController::LIMoSimController()
 
 LIMoSimController::~LIMoSimController()
 {
-    for(auto it=m_events.begin(); it!=m_events.end(); it++)
-    {
-        auto k = it->second->getEventArraySize();
-        for (size_t i=0; i<k; i++) {
-            auto event = it->second->getEventForUpdate(i);
-            if (event != nullptr)
-                delete event;
+    for(auto& elem: m_events) {
+        auto& limoEvents = elem.second->getEventsForUpdate();
+        while (!limoEvents.empty()) {
+            delete limoEvents.front();
+            limoEvents.pop_front();
         }
     }
 }
@@ -61,12 +59,12 @@ void LIMoSimController::scheduleEvent(LIMoSim::Event *_event)
     auto it = m_events.find(timestamp);
     if (it == m_events.end()) {
         auto event = new LIMoEvent();
-        event->insertEvent(_event);
+        event->getEventsForUpdate().push_back(_event);
         m_events[timestamp] = event;
         scheduleAt(timestamp, event);
     }
     else {
-        it->second->insertEvent(_event);
+        it->second->getEventsForUpdate().push_back(_event);
     }
 }
 
@@ -75,16 +73,16 @@ void LIMoSimController::cancelEvent(LIMoSim::Event *_event)
     auto it = m_events.find(_event->getTimestamp());
     if(it != m_events.end())
     {
-        auto k = it->second->getEventArraySize();
-        for (size_t i=0; i<k; i++) {
-            if (it->second->getEvent(i) == _event) {
-                it->second->eraseEvent(i);
+        auto& events = it->second->getEventsForUpdate();
+        for (auto it = events.begin(); it != events.end(); ++it) {
+            if (*it == _event) {
                 delete _event;
+                events.erase(it);
                 _event = nullptr;
                 break;
             }
         }
-        if (it->second->getEventArraySize() == 0) {
+        if (events.empty()) {
             cancelAndDelete(it->second);
             m_events.erase(it);
         }
@@ -103,15 +101,14 @@ void LIMoSimController::handleMessage(cMessage *_message)
     if(_message->isSelfMessage())
     {
         auto _event = check_and_cast<LIMoEvent*>(_message);
-        while (_event->getEventArraySize() > 0) {
-            LIMoSim::Event *event = _event->getEventForUpdate(0);
-            _event->eraseEvent(0);
-            if (event) {
-                if(simtime_t(event->getTimestamp()) == _message->getArrivalTime())
-                    event->handle();
-                else
-                    throw cRuntimeError("Model error: event not in the map: %s", event->getInfo().c_str());
-            }
+        auto& events = _event->getEventsForUpdate();
+        while (!events.empty()) {
+            LIMoSim::Event *event = events.front();
+            events.pop_front();
+            if(simtime_t(event->getTimestamp()) == _message->getArrivalTime())
+                event->handle();
+            else
+                throw cRuntimeError("Model error: event not in the map: %s", event->getInfo().c_str());
         }
         m_events.erase(_message->getArrivalTime());
         delete _message;

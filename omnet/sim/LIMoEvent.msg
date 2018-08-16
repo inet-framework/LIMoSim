@@ -10,20 +10,20 @@ cplusplus {{
 
 namespace LIMoSim;
 
-class Event {
+cplusplus {{
+typedef std::list<Event *> EventList;
+inline std::ostream& operator<<(std::ostream& out,const LIMoSim::EventList) {return out;}
+}}
+
+class EventList {
     @existingClass;
     @descriptor(readonly);
-    double timestamp;
 }
-
-cplusplus {{
-inline std::ostream& operator<<(std::ostream& out,const LIMoSim::Event*) {return out;}
-}}
 
 namespace inet;
 
 class LIMoEvent extends cMessage
 {
-    LIMoSim::Event *event[];
+    LIMoSim::EventList events;
 }
 
