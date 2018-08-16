@@ -11,7 +11,7 @@ cplusplus {{
 namespace LIMoSim;
 
 cplusplus {{
-typedef std::list<Event *> EventList;
+typedef std::vector<Event *> EventList;
 inline std::ostream& operator<<(std::ostream& out,const LIMoSim::EventList) {return out;}
 }}
 

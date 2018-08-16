@@ -36,10 +36,8 @@ LIMoSimController::~LIMoSimController()
 {
     for(auto& elem: m_events) {
         auto& limoEvents = elem.second->getEventsForUpdate();
-        while (!limoEvents.empty()) {
-            delete limoEvents.front();
-            limoEvents.pop_front();
-        }
+        for (auto event : limoEvents)
+            delete event;
     }
 }
 
@@ -59,6 +57,7 @@ void LIMoSimController::scheduleEvent(LIMoSim::Event *_event)
     auto it = m_events.find(timestamp);
     if (it == m_events.end()) {
         auto event = new LIMoEvent();
+        event->getEventsForUpdate().reserve(100);      // set initial capacity
         event->getEventsForUpdate().push_back(_event);
         m_events[timestamp] = event;
         scheduleAt(timestamp, event);
@@ -102,9 +101,7 @@ void LIMoSimController::handleMessage(cMessage *_message)
     {
         auto _event = check_and_cast<LIMoEvent*>(_message);
         auto& events = _event->getEventsForUpdate();
-        while (!events.empty()) {
-            LIMoSim::Event *event = events.front();
-            events.pop_front();
+        for (auto event: events) {
             if(simtime_t(event->getTimestamp()) == _message->getArrivalTime())
                 event->handle();
             else
