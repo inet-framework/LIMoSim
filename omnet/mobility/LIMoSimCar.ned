@@ -35,6 +35,8 @@ module LIMoSimCar extends MovingMobilityBase
         int lane = default(-1);
         double offset @unit(m) = default(0m);
 
+        @signal[mobilityStateChanged](type=inet::MobilityBase);     // should be specify namespace for type, because LIMoSimCar not in inet namespace
+
     submodules:
         strategicModel: <strategicModelType> like IStrategicModel if strategicModelType != "";
         followerModel: <followerModelType> like IFollowerModel if followerModelType != "";
